@@ -1,8 +1,7 @@
 // OpenWeatherMap API configuration
 export const API_CONFIG = {
   BASE_URL: 'https://api.openweathermap.org/data/2.5',
-  // Use working API key as fallback (from original PRD)
-  API_KEY: import.meta.env.VITE_OPENWEATHER_API_KEY || '2abd0f5e273e0a0d783b92973da61132',
+  API_KEY: import.meta.env.VITE_OPENWEATHER_API_KEY,
   ENDPOINTS: {
     CURRENT_WEATHER: '/weather',
     FORECAST: '/forecast'
