@@ -1,0 +1,65 @@
+{
+  "app": {
+    "title": "Weather Forecast",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry"
+  },
+  "search": {
+    "placeholder": "Search for a city...",
+    "button": "Search",
+    "noResults": "No results found",
+    "error": "City not found"
+  },
+  "weather": {
+    "current": "Current Weather",
+    "forecast": "7-Day Forecast",
+    "details": "Weather Details",
+    "temperature": "Temperature",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "windSpeed": "Wind Speed",
+    "pressure": "Pressure",
+    "visibility": "Visibility",
+    "uvIndex": "UV Index",
+    "sunrise": "Sunrise",
+    "sunset": "Sunset",
+    "high": "High",
+    "low": "Low"
+  },
+  "units": {
+    "celsius": "°C",
+    "fahrenheit": "°F",
+    "metric": "Metric",
+    "imperial": "Imperial",
+    "kmh": "km/h",
+    "mph": "mph",
+    "hPa": "hPa",
+    "km": "km",
+    "mi": "mi"
+  },
+  "settings": {
+    "theme": "Theme",
+    "language": "Language",
+    "units": "Units",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "cities": {
+    "saved": "Saved Cities",
+    "add": "Add City",
+    "remove": "Remove",
+    "noSaved": "No saved cities"
+  },
+  "navigation": {
+    "home": "Home",
+    "forecast": "Forecast",
+    "settings": "Settings"
+  },
+  "errors": {
+    "networkError": "Network error. Please check your connection.",
+    "locationError": "Unable to get your location. Please search for a city.",
+    "apiError": "Weather service temporarily unavailable. Please try again later.",
+    "invalidCity": "Please enter a valid city name."
+  }
+} 

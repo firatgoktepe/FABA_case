@@ -1,0 +1,65 @@
+{
+  "app": {
+    "title": "Pronóstico del Tiempo",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "retry": "Reintentar"
+  },
+  "search": {
+    "placeholder": "Buscar una ciudad...",
+    "button": "Buscar",
+    "noResults": "No se encontraron resultados",
+    "error": "Ciudad no encontrada"
+  },
+  "weather": {
+    "current": "Tiempo Actual",
+    "forecast": "Pronóstico de 7 Días",
+    "details": "Detalles del Tiempo",
+    "temperature": "Temperatura",
+    "feelsLike": "Sensación térmica",
+    "humidity": "Humedad",
+    "windSpeed": "Velocidad del Viento",
+    "pressure": "Presión",
+    "visibility": "Visibilidad",
+    "uvIndex": "Índice UV",
+    "sunrise": "Amanecer",
+    "sunset": "Atardecer",
+    "high": "Máxima",
+    "low": "Mínima"
+  },
+  "units": {
+    "celsius": "°C",
+    "fahrenheit": "°F",
+    "metric": "Métrico",
+    "imperial": "Imperial",
+    "kmh": "km/h",
+    "mph": "mph",
+    "hPa": "hPa",
+    "km": "km",
+    "mi": "mi"
+  },
+  "settings": {
+    "theme": "Tema",
+    "language": "Idioma",
+    "units": "Unidades",
+    "lightMode": "Modo Claro",
+    "darkMode": "Modo Oscuro"
+  },
+  "cities": {
+    "saved": "Ciudades Guardadas",
+    "add": "Agregar Ciudad",
+    "remove": "Eliminar",
+    "noSaved": "No hay ciudades guardadas"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "forecast": "Pronóstico",
+    "settings": "Configuración"
+  },
+  "errors": {
+    "networkError": "Error de red. Por favor verifica tu conexión.",
+    "locationError": "No se pudo obtener tu ubicación. Por favor busca una ciudad.",
+    "apiError": "Servicio de clima temporalmente no disponible. Por favor intenta más tarde.",
+    "invalidCity": "Por favor ingresa un nombre de ciudad válido."
+  }
+} 
