@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
 
 const WeatherContext = createContext()
 
@@ -24,33 +24,33 @@ export const WeatherProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : []
   })
 
-  const toggleUnits = () => {
+  const toggleUnits = useCallback(() => {
     setUnits(prevUnits => {
       const newUnits = prevUnits === 'metric' ? 'imperial' : 'metric'
       localStorage.setItem('units', newUnits)
       return newUnits
     })
-  }
+  }, [])
 
-  const addSavedCity = (city) => {
+  const addSavedCity = useCallback((city) => {
     setSavedCities(prevCities => {
       const newCities = [...prevCities, city]
       localStorage.setItem('savedCities', JSON.stringify(newCities))
       return newCities
     })
-  }
+  }, [])
 
-  const removeSavedCity = (cityId) => {
+  const removeSavedCity = useCallback((cityId) => {
     setSavedCities(prevCities => {
       const newCities = prevCities.filter(city => city.id !== cityId)
       localStorage.setItem('savedCities', JSON.stringify(newCities))
       return newCities
     })
-  }
+  }, [])
 
-  const updateCurrentLocation = (location) => {
+  const updateCurrentLocation = useCallback((location) => {
     setCurrentLocation(location)
-  }
+  }, [])
 
   useEffect(() => {
     // Try to get user's current location, but don't break if it fails
@@ -78,7 +78,9 @@ export const WeatherProvider = ({ children }) => {
     }
   }, [])
 
-  const value = {
+  const isMetric = useMemo(() => units === 'metric', [units])
+
+  const value = useMemo(() => ({
     currentLocation,
     updateCurrentLocation,
     units,
@@ -86,8 +88,17 @@ export const WeatherProvider = ({ children }) => {
     savedCities,
     addSavedCity,
     removeSavedCity,
-    isMetric: units === 'metric'
-  }
+    isMetric
+  }), [
+    currentLocation,
+    updateCurrentLocation,
+    units,
+    toggleUnits,
+    savedCities,
+    addSavedCity,
+    removeSavedCity,
+    isMetric
+  ])
 
   return (
     <WeatherContext.Provider value={value}>

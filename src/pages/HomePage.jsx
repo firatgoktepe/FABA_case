@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
 import CurrentWeather from '../containers/CurrentWeather'
@@ -13,7 +13,7 @@ const HomePage = () => {
   const { t } = useLanguage()
   const { updateCurrentLocation, addSavedCity, units } = useWeather()
 
-  const handleSearch = async (cityName) => {
+  const handleSearch = useCallback(async (cityName) => {
     try {
       // Fetch weather data for the searched city
       const weatherData = await weatherService.fetchCurrentWeather(cityName, units)
@@ -37,7 +37,7 @@ const HomePage = () => {
       console.error('Search failed:', error)
       throw error // Re-throw so SearchBar can handle the error
     }
-  }
+  }, [units, updateCurrentLocation, addSavedCity])
 
   return (
     <div className="home-page">

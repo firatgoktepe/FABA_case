@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useWeather } from '../contexts/WeatherContext'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const SavedCities = () => {
   const { savedCities, removeSavedCity, updateCurrentLocation } = useWeather()
   const { t } = useLanguage()
+
+  const handleCityClick = useCallback((city) => {
+    updateCurrentLocation({
+      lat: city.coordinates.lat,
+      lon: city.coordinates.lon
+    })
+  }, [updateCurrentLocation])
+
+  const handleRemoveCity = useCallback((e, cityId) => {
+    e.stopPropagation()
+    removeSavedCity(cityId)
+  }, [removeSavedCity])
 
   if (!savedCities || savedCities.length === 0) {
     return (
@@ -15,18 +27,6 @@ const SavedCities = () => {
         </div>
       </div>
     )
-  }
-
-  const handleCityClick = (city) => {
-    updateCurrentLocation({
-      lat: city.coordinates.lat,
-      lon: city.coordinates.lon
-    })
-  }
-
-  const handleRemoveCity = (e, cityId) => {
-    e.stopPropagation()
-    removeSavedCity(cityId)
   }
 
   return (

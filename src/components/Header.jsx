@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useWeather } from '../contexts/WeatherContext'
@@ -8,9 +8,9 @@ const Header = () => {
   const { t, changeLanguage, currentLanguage, isEnglish } = useLanguage()
   const { units, toggleUnits, isMetric } = useWeather()
 
-  const handleLanguageChange = () => {
+  const handleLanguageChange = useCallback(() => {
     changeLanguage(isEnglish ? 'es' : 'en')
-  }
+  }, [changeLanguage, isEnglish])
 
   return (
     <header className="header">

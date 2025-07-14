@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useWeather } from '../contexts/WeatherContext'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -23,6 +23,18 @@ const CurrentWeather = () => {
     enabled: !!currentLocation,
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
+
+  const formattedSunrise = useMemo(() => {
+    return weatherData?.sun.sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }, [weatherData?.sun.sunrise])
+
+  const formattedSunset = useMemo(() => {
+    return weatherData?.sun.sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }, [weatherData?.sun.sunset])
+
+  const weatherIconUrl = useMemo(() => {
+    return weatherData ? `https://openweathermap.org/img/wn/${weatherData.weather.icon}@4x.png` : null
+  }, [weatherData?.weather.icon])
 
   if (isLoading) {
     return (
@@ -58,14 +70,6 @@ const CurrentWeather = () => {
     )
   }
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  }
-
-  const getWeatherIcon = (iconCode) => {
-    return `https://openweathermap.org/img/wn/${iconCode}@4x.png`
-  }
-
   return (
     <div className="current-weather card">
       <div className="weather-location">
@@ -74,7 +78,7 @@ const CurrentWeather = () => {
       
       <div className="weather-main">
         <img 
-          src={getWeatherIcon(weatherData.weather.icon)}
+          src={weatherIconUrl}
           alt={weatherData.weather.description}
           className="weather-icon"
         />
@@ -114,20 +118,18 @@ const CurrentWeather = () => {
         {weatherData.details.visibility && (
           <div className="weather-detail">
             <span className="detail-label">{t('weather.visibility')}</span>
-            <span className="detail-value">
-              {weatherData.details.visibility} {isMetric ? t('units.km') : t('units.mi')}
-            </span>
+            <span className="detail-value">{weatherData.details.visibility} {t('units.km')}</span>
           </div>
         )}
         
         <div className="weather-detail">
           <span className="detail-label">{t('weather.sunrise')}</span>
-          <span className="detail-value">{formatTime(weatherData.sun.sunrise)}</span>
+          <span className="detail-value">{formattedSunrise}</span>
         </div>
         
         <div className="weather-detail">
           <span className="detail-label">{t('weather.sunset')}</span>
-          <span className="detail-value">{formatTime(weatherData.sun.sunset)}</span>
+          <span className="detail-value">{formattedSunset}</span>
         </div>
       </div>
     </div>
