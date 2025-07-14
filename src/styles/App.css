@@ -129,7 +129,7 @@
 
 .weather-detail {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: var(--spacing-sm) 0;
   border-bottom: 1px solid var(--border-color);
 }
@@ -366,6 +366,10 @@
   
   .weather-details {
     grid-template-columns: 1fr;
+  }
+
+  .weather-detail {
+    justify-content: space-between;
   }
   
   .forecast-grid {

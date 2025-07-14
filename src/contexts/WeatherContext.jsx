@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
+import React, { createContext, useContext, useMemo, useCallback, useRef } from 'react'
+import { useLocalStorage, useGeolocation } from '../hooks'
 
 const WeatherContext = createContext()
 
@@ -11,72 +12,55 @@ export const useWeather = () => {
 }
 
 export const WeatherProvider = ({ children }) => {
-  // Set default location to Istanbul instead of null
-  const [currentLocation, setCurrentLocation] = useState({
+  // Use custom hooks for localStorage management
+  const [units, setUnits] = useLocalStorage('units', 'metric')
+  const [savedCities, setSavedCities] = useLocalStorage('savedCities', [])
+  
+  // Use custom hook for geolocation
+  const { location: geoLocation, hasAttempted } = useGeolocation()
+  const [currentLocation, setCurrentLocation] = useLocalStorage('currentLocation', {
     lat: 41.0082,
     lon: 28.9784
   })
-  const [units, setUnits] = useState(() => {
-    return localStorage.getItem('units') || 'metric'
-  })
-  const [savedCities, setSavedCities] = useState(() => {
-    const saved = localStorage.getItem('savedCities')
-    return saved ? JSON.parse(saved) : []
-  })
+  
+  const hasUpdatedFromGeoRef = useRef(false)
+
+  // Update current location when geolocation is obtained for the first time
+  React.useEffect(() => {
+    if (
+      hasAttempted && 
+      geoLocation && 
+      !hasUpdatedFromGeoRef.current &&
+      (currentLocation.lat === 41.0082 && currentLocation.lon === 28.9784) // Only if still using default Istanbul location
+    ) {
+      console.log('🔄 Updating location from geolocation:', geoLocation)
+      setCurrentLocation(geoLocation)
+      hasUpdatedFromGeoRef.current = true
+    }
+  }, [geoLocation, hasAttempted, currentLocation, setCurrentLocation])
 
   const toggleUnits = useCallback(() => {
-    setUnits(prevUnits => {
-      const newUnits = prevUnits === 'metric' ? 'imperial' : 'metric'
-      localStorage.setItem('units', newUnits)
-      return newUnits
-    })
-  }, [])
+    setUnits(prevUnits => prevUnits === 'metric' ? 'imperial' : 'metric')
+  }, [setUnits])
 
   const addSavedCity = useCallback((city) => {
     setSavedCities(prevCities => {
-      const newCities = [...prevCities, city]
-      localStorage.setItem('savedCities', JSON.stringify(newCities))
-      return newCities
+      // Check if city already exists
+      const exists = prevCities.some(existingCity => existingCity.id === city.id)
+      if (exists) return prevCities
+      
+      return [...prevCities, city]
     })
-  }, [])
+  }, [setSavedCities])
 
   const removeSavedCity = useCallback((cityId) => {
-    setSavedCities(prevCities => {
-      const newCities = prevCities.filter(city => city.id !== cityId)
-      localStorage.setItem('savedCities', JSON.stringify(newCities))
-      return newCities
-    })
-  }, [])
+    setSavedCities(prevCities => prevCities.filter(city => city.id !== cityId))
+  }, [setSavedCities])
 
   const updateCurrentLocation = useCallback((location) => {
     setCurrentLocation(location)
-  }, [])
-
-  useEffect(() => {
-    // Try to get user's current location, but don't break if it fails
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log('✅ Geolocation success:', position.coords)
-          setCurrentLocation({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude
-          })
-        },
-        (error) => {
-          console.log('⚠️ Geolocation failed, using default location (Istanbul):', error.message)
-          // Keep default Istanbul location - don't change anything
-        },
-        {
-          timeout: 10000,
-          enableHighAccuracy: false,
-          maximumAge: 300000 // 5 minutes
-        }
-      )
-    } else {
-      console.log('⚠️ Geolocation not supported, using default location (Istanbul)')
-    }
-  }, [])
+    hasUpdatedFromGeoRef.current = true // Mark as manually updated
+  }, [setCurrentLocation])
 
   const isMetric = useMemo(() => units === 'metric', [units])
 

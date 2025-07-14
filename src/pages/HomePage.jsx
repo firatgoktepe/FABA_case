@@ -7,16 +7,17 @@ import SavedCities from '../components/SavedCities'
 import ErrorBoundary from '../components/ErrorBoundary'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useWeather } from '../contexts/WeatherContext'
-import weatherService from '../services/weatherService'
+import { useWeatherSearch } from '../hooks'
 
 const HomePage = () => {
   const { t } = useLanguage()
   const { updateCurrentLocation, addSavedCity, units } = useWeather()
+  const { searchWeather } = useWeatherSearch(units)
 
   const handleSearch = useCallback(async (cityName) => {
     try {
-      // Fetch weather data for the searched city
-      const weatherData = await weatherService.fetchCurrentWeather(cityName, units)
+      // Use the custom hook to search for weather
+      const weatherData = await searchWeather(cityName)
       
       // Update current location to show weather for searched city
       updateCurrentLocation({
@@ -37,7 +38,7 @@ const HomePage = () => {
       console.error('Search failed:', error)
       throw error // Re-throw so SearchBar can handle the error
     }
-  }, [units, updateCurrentLocation, addSavedCity])
+  }, [searchWeather, updateCurrentLocation, addSavedCity])
 
   return (
     <div className="home-page">

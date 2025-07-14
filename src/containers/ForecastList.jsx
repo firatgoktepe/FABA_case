@@ -1,29 +1,14 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { useWeather } from '../contexts/WeatherContext'
 import { useLanguage } from '../contexts/LanguageContext'
+import { useForecastWeather } from '../hooks'
 import ForecastItemCard from '../components/ForecastItemCard'
-import weatherService from '../services/weatherService'
 
 const ForecastList = () => {
   const { currentLocation, units } = useWeather()
   const { t } = useLanguage()
 
-  const { data: forecastData, isLoading, error } = useQuery({
-    queryKey: ['forecast', currentLocation, units],
-    queryFn: () => {
-      if (currentLocation) {
-        return weatherService.fetchForecast(
-          currentLocation.lat, 
-          currentLocation.lon, 
-          units
-        )
-      }
-      return null
-    },
-    enabled: !!currentLocation,
-    staleTime: 10 * 60 * 1000, // 10 minutes
-  })
+  const { data: forecastData, isLoading, error } = useForecastWeather(currentLocation, units)
 
   if (isLoading) {
     return (

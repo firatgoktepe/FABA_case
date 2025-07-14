@@ -25,7 +25,9 @@
     "sunrise": "Amanecer",
     "sunset": "Atardecer",
     "high": "Máxima",
-    "low": "Mínima"
+    "low": "Mínima",
+    "today": "Hoy",
+    "rain": "Lluvia"
   },
   "units": {
     "celsius": "°C",

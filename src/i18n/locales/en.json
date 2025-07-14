@@ -25,7 +25,9 @@
     "sunrise": "Sunrise",
     "sunset": "Sunset",
     "high": "High",
-    "low": "Low"
+    "low": "Low",
+    "today": "Today",
+    "rain": "Rain"
   },
   "units": {
     "celsius": "°C",

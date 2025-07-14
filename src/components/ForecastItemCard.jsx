@@ -1,37 +1,22 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useWeather } from '../contexts/WeatherContext'
+import { useWeatherFormatting } from '../hooks'
 
 const ForecastItemCard = ({ day, index }) => {
   const { t } = useLanguage()
   const { isMetric } = useWeather()
-
-  const formattedDate = useMemo(() => {
-    if (index === 0) return t('weather.today')
-    return day.date.toLocaleDateString([], { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric' 
-    })
-  }, [day.date, index, t])
-
-  const weatherIconUrl = useMemo(() => {
-    return `https://openweathermap.org/img/wn/${day.weather.icon}@2x.png`
-  }, [day.weather.icon])
-
-  const rainPercentage = useMemo(() => {
-    return day.pop > 0 ? Math.round(day.pop * 100) : null
-  }, [day.pop])
+  const { formatForecastDate, getWeatherIconUrl, formatPrecipitation } = useWeatherFormatting()
 
   return (
     <div className="forecast-item card">
       <div className="forecast-date">
-        {formattedDate}
+        {formatForecastDate(day.date, index)}
       </div>
       
       <div className="forecast-weather">
         <img 
-          src={weatherIconUrl}
+          src={getWeatherIconUrl(day.weather.icon)}
           alt={day.weather.description}
           className="forecast-icon"
         />
@@ -56,9 +41,9 @@ const ForecastItemCard = ({ day, index }) => {
         <div className="detail-item">
           <span>{t('weather.windSpeed')}: {day.windSpeed} {isMetric ? t('units.kmh') : t('units.mph')}</span>
         </div>
-        {rainPercentage && (
+        {formatPrecipitation(day.pop) && (
           <div className="detail-item">
-            <span>{t('weather.rain')}: {rainPercentage}%</span>
+            <span>{t('weather.rain')}: {formatPrecipitation(day.pop)}%</span>
           </div>
         )}
       </div>
