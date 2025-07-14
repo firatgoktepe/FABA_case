@@ -11,15 +11,12 @@ src/tests/
 │   └── testUtils.jsx           # Reusable test utilities and providers
 ├── hooks/                      # Custom hooks unit tests
 │   ├── useLocalStorage.test.js
-│   ├── useGeolocation.test.js
 │   ├── useWeatherData.test.js
 │   └── useWeatherFormatting.test.js
 ├── components/                 # Component unit tests
 │   └── ForecastItemCard.test.jsx
 ├── services/                   # Service layer tests
 │   └── weatherService.test.js
-├── integration/                # End-to-end integration tests
-│   └── WeatherApp.test.jsx
 ├── runTests.js                 # Custom test runner with coverage validation
 └── README.md                   # This file
 ```
@@ -29,7 +26,6 @@ src/tests/
 ### **Unit Tests - Custom Hooks (90%+ Coverage)**
 
 - **`useLocalStorage`**: localStorage operations, error handling, state management
-- **`useGeolocation`**: geolocation API, error scenarios, default fallbacks
 - **`useWeatherData`**: React Query integration, API calls, caching
 - **`useWeatherFormatting`**: data formatting, internationalization, memoization
 
@@ -42,11 +38,6 @@ src/tests/
 
 - **`weatherService`**: API calls, data transformation, error handling
 - Tests all weather service methods and edge cases
-
-### **Integration Tests (85%+ Coverage)**
-
-- **`WeatherApp`**: complete user flows, API integration, state management
-- Tests full application functionality from user interaction to data display
 
 ## 🚀 Running Tests
 

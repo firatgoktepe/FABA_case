@@ -5,9 +5,24 @@ import SavedCities from '../../components/SavedCities'
 import { useWeather } from '../../contexts/WeatherContext'
 import { useLanguage } from '../../contexts/LanguageContext'
 
-// Mock the contexts
-jest.mock('../../contexts/WeatherContext')
-jest.mock('../../contexts/LanguageContext')
+// Mock only the hook functions, keep providers intact
+jest.mock('../../contexts/WeatherContext', () => {
+  const actual = jest.requireActual('../../contexts/WeatherContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useWeather: jest.fn()
+  }
+})
+
+jest.mock('../../contexts/LanguageContext', () => {
+  const actual = jest.requireActual('../../contexts/LanguageContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useLanguage: jest.fn()
+  }
+})
 
 describe('SavedCities', () => {
   const mockT = createMockTranslation()

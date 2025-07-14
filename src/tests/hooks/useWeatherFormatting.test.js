@@ -2,8 +2,13 @@ import { renderHook } from '@testing-library/react'
 import { useWeatherFormatting } from '../../hooks/useWeatherFormatting'
 import { useLanguage } from '../../contexts/LanguageContext'
 
-// Mock the useLanguage hook
-jest.mock('../../contexts/LanguageContext')
+// Provide a manual mock for LanguageContext to avoid loading i18n configuration
+jest.mock('../../contexts/LanguageContext', () => {
+  return {
+    __esModule: true,
+    useLanguage: jest.fn()
+  }
+})
 
 describe('useWeatherFormatting', () => {
   const mockT = jest.fn()

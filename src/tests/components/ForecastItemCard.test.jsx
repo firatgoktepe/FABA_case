@@ -6,10 +6,33 @@ import { useLanguage } from '../../contexts/LanguageContext'
 import { useWeather } from '../../contexts/WeatherContext'
 import { useWeatherFormatting } from '../../hooks/useWeatherFormatting'
 
-// Mock the hooks
-jest.mock('../../contexts/LanguageContext')
-jest.mock('../../contexts/WeatherContext')
-jest.mock('../../hooks/useWeatherFormatting')
+// Mock only the hook functions while keeping Provider components intact
+jest.mock('../../contexts/LanguageContext', () => {
+  const actual = jest.requireActual('../../contexts/LanguageContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useLanguage: jest.fn()
+  }
+})
+
+jest.mock('../../contexts/WeatherContext', () => {
+  const actual = jest.requireActual('../../contexts/WeatherContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useWeather: jest.fn()
+  }
+})
+
+jest.mock('../../hooks/useWeatherFormatting', () => {
+  const actual = jest.requireActual('../../hooks/useWeatherFormatting')
+  return {
+    __esModule: true,
+    ...actual,
+    useWeatherFormatting: jest.fn()
+  }
+})
 
 describe('ForecastItemCard', () => {
   const mockT = createMockTranslation()

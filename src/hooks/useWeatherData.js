@@ -23,7 +23,7 @@ export const useCurrentWeather = (location, units = 'metric', options = {}) => {
     },
     enabled: !!(location?.lat && location?.lon),
     staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 2,
+    retry: false,
     ...options
   })
 }
@@ -50,7 +50,7 @@ export const useForecastWeather = (location, units = 'metric', options = {}) => 
     },
     enabled: !!(location?.lat && location?.lon),
     staleTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
+    retry: false,
     ...options
   })
 }

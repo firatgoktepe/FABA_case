@@ -6,16 +6,51 @@ import { useTheme } from '../../contexts/ThemeContext'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { useWeather } from '../../contexts/WeatherContext'
 
-// Mock the contexts
-jest.mock('../../contexts/ThemeContext')
-jest.mock('../../contexts/LanguageContext')
-jest.mock('../../contexts/WeatherContext')
+// Mock the context hooks but retain the provider components so the tree renders
+jest.mock('../../contexts/ThemeContext', () => {
+  const actual = jest.requireActual('../../contexts/ThemeContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useTheme: jest.fn()
+  }
+})
+
+jest.mock('../../contexts/LanguageContext', () => {
+  const actual = jest.requireActual('../../contexts/LanguageContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useLanguage: jest.fn()
+  }
+})
+
+jest.mock('../../contexts/WeatherContext', () => {
+  const actual = jest.requireActual('../../contexts/WeatherContext')
+  return {
+    __esModule: true,
+    ...actual,
+    useWeather: jest.fn()
+  }
+})
 
 describe('Header', () => {
-  const mockT = createMockTranslation()
   const mockToggleTheme = jest.fn()
   const mockChangeLanguage = jest.fn()
   const mockToggleUnits = jest.fn()
+
+  // Create a proper mock translation function that returns the expected values
+  const mockT = jest.fn((key) => {
+    const translations = {
+      'app.title': 'Weather Forecast',
+      'settings.units': 'Units',
+      'settings.language': 'Language', 
+      'settings.theme': 'Theme',
+      'units.metric': 'Metric',
+      'units.imperial': 'Imperial'
+    }
+    return translations[key] || key
+  })
 
   beforeEach(() => {
     jest.clearAllMocks()

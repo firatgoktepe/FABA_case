@@ -7,10 +7,9 @@ const SavedCities = () => {
   const { t } = useLanguage()
 
   const handleCityClick = useCallback((city) => {
-    updateCurrentLocation({
-      lat: city.coordinates.lat,
-      lon: city.coordinates.lon
-    })
+    const lat = city.coordinates?.lat ?? null
+    const lon = city.coordinates?.lon ?? null
+    updateCurrentLocation({ lat, lon })
   }, [updateCurrentLocation])
 
   const handleRemoveCity = useCallback((e, cityId) => {

@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="search-bar">
-      <form onSubmit={handleSubmit} className="search-form">
+      <form onSubmit={handleSubmit} className="search-form" role="form" aria-label="search form">
         <input
           type="text"
           value={searchTerm}
