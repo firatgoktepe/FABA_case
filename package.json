@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "license": "MIT",
+  "author": "Fırat Göktepe",
+  "description": "Weather Forecast App",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
