@@ -8,11 +8,6 @@ export const API_CONFIG = {
   }
 }
 
-// Debug environment variables
-console.log('Environment check:')
-console.log('- VITE_OPENWEATHER_API_KEY:', import.meta.env.VITE_OPENWEATHER_API_KEY ? 'SET' : 'NOT SET')
-console.log('- Using API key:', API_CONFIG.API_KEY.substring(0, 8) + '...')
-
 // API URLs
 export const API_URLS = {
   currentWeather: (q, units = 'metric') => 
