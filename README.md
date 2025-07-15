@@ -4,7 +4,7 @@ A modern, responsive weather forecast application built with React, Vite, and th
 
 This app provides current weather conditions, a 7-day forecast, and supports multiple cities with localization in English and Spanish. It features dark mode, geolocation, and a user-friendly interface.
 
-Link: [Weather Forecast App](https://fabaweatherapp.netlify.app/)
+Link: <a href="https://fabaweatherapp.netlify.app/" target="_blank" rel="noopener noreferrer">Weather Forecast App</a>
 
 ## Features
 
